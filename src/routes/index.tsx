@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import {
   ShoppingBag,
@@ -19,24 +19,16 @@ import {
 import roach from "@/assets/sticker-roach.png";
 import textSticker from "@/assets/sticker-text.png";
 import ballot from "@/assets/sticker-ballot.png";
-import fist from "@/assets/sticker-fist.png";
 import speech from "@/assets/sticker-speech.png";
 import crown from "@/assets/sticker-crown.png";
 import laptop from "@/assets/lifestyle-laptop.jpg";
 import bottle from "@/assets/lifestyle-bottle.jpg";
+import { products } from "@/data/products";
+import { RazorpayButton } from "@/components/RazorpayButton";
 
 export const Route = createFileRoute("/")({
   component: Index,
 });
-
-const products = [
-  { id: 1, img: roach, title: "Shady Roach", desc: "For laptops that survive anything.", price: 149, tag: "Bestseller", accent: "bg-neon" },
-  { id: 2, img: textSticker, title: "Main Bhi Cockroach", desc: "The one that started the whole mess.", price: 199, tag: "Limited", accent: "bg-signal" },
-  { id: 3, img: ballot, title: "Ballot Bug", desc: "Democracy has small feet.", price: 179, tag: "New", accent: "bg-volt" },
-  { id: 4, img: fist, title: "Paint The Town", desc: "For quiet rebels with loud brushes.", price: 159, tag: "Fresh", accent: "bg-neon" },
-  { id: 5, img: speech, title: "Opinions Included", desc: "A speech bubble for your water bottle.", price: 129, tag: "Popular", accent: "bg-signal" },
-  { id: 6, img: crown, title: "King Kachra", desc: "Every empire has its bugs.", price: 229, tag: "Drop 01", accent: "bg-volt" },
-];
 
 const collections = [
   { name: "Satirical Icons", count: 12 },
