@@ -13,7 +13,6 @@ import {
   Truck,
   Star,
   Plus,
-  X,
   ArrowRight,
 } from "lucide-react";
 import roach from "@/assets/sticker-roach.png";
