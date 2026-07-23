@@ -40,6 +40,26 @@ export const Route = createFileRoute("/product/$slug")({
         { property: "og:type", content: "product" },
         { name: "twitter:card", content: "summary_large_image" },
       ],
+      scripts: p
+        ? [
+            {
+              type: "application/ld+json",
+              children: JSON.stringify({
+                "@context": "https://schema.org/",
+                "@type": "Product",
+                name: p.title,
+                description: p.story,
+                brand: { "@type": "Brand", name: "Main Bhi Cockroach Art" },
+                offers: {
+                  "@type": "Offer",
+                  price: p.price,
+                  priceCurrency: "INR",
+                  availability: "https://schema.org/InStock",
+                },
+              }),
+            },
+          ]
+        : undefined,
     };
   },
   notFoundComponent: () => (

@@ -23,7 +23,6 @@ import crown from "@/assets/sticker-crown.png";
 import laptop from "@/assets/lifestyle-laptop.jpg";
 import bottle from "@/assets/lifestyle-bottle.jpg";
 import { products } from "@/data/products";
-import { RazorpayButton } from "@/components/RazorpayButton";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -71,12 +70,12 @@ function Index() {
       {/* Nav */}
       <header className="sticky top-0 z-40 border-b border-ink/10 bg-paper/85 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-10">
-          <a href="#" className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2">
             <span className="grid h-9 w-9 place-items-center rounded-full bg-ink text-neon font-display text-lg">M</span>
             <span className="font-display text-sm sm:text-base leading-none">
               MAIN BHI<br /><span className="text-signal">COCKROACH<span className="text-ink">.ART</span></span>
             </span>
-          </a>
+          </Link>
           <nav className="hidden md:flex items-center gap-8 text-sm font-semibold">
             <a href="#shop" className="hover:text-signal transition">Shop</a>
             <a href="#collections" className="hover:text-signal transition">Collections</a>
@@ -140,7 +139,7 @@ function Index() {
             {/* Floating sticker stage */}
             <div className="relative h-[420px] sm:h-[520px] lg:h-[600px]">
               <div className="absolute inset-0 rounded-[2rem] border-2 border-dashed border-ink/15" />
-              <img src={roach} alt="" width={768} height={768} className="absolute top-4 left-6 w-48 sm:w-60 lg:w-72 sticker-shadow anim-float-a" />
+              <img src={roach} alt="Shady Roach sticker" fetchPriority="high" width={768} height={768} className="absolute top-4 left-6 w-48 sm:w-60 lg:w-72 sticker-shadow anim-float-a" />
               <img src={textSticker} alt="" width={768} height={768} className="absolute top-24 right-2 w-44 sm:w-56 lg:w-64 sticker-shadow anim-float-b" />
               <img src={ballot} alt="" width={768} height={768} className="absolute bottom-6 left-16 w-40 sm:w-48 lg:w-56 sticker-shadow anim-float-c" />
               <img src={speech} alt="" width={768} height={768} className="absolute bottom-16 right-10 w-36 sm:w-44 lg:w-52 sticker-shadow anim-float-a" />
@@ -196,7 +195,7 @@ function Index() {
                 Stick <span className="text-signal">Different.</span>
               </h2>
             </div>
-            <a href="#" className="text-sm font-bold underline underline-offset-4 decoration-neon hover:text-neon">View all 85 designs →</a>
+            <a href="#shop" className="text-sm font-bold underline underline-offset-4 decoration-neon hover:text-neon">View all designs →</a>
           </div>
 
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -235,20 +234,22 @@ function Index() {
                     ))}
                   </div>
                   <div className="mt-5 flex gap-2">
-                    <button onClick={() => setCartCount((c) => c + 1)} className="flex-1 rounded-full bg-ink text-paper py-2.5 text-sm font-bold hover:bg-signal transition">
-                      Add to Cart
-                    </button>
                     <Link
                       to="/product/$slug"
                       params={{ slug: p.slug }}
-                      aria-label="View details"
+                      onClick={() => setCartCount((c) => c + 1)}
+                      className="flex-1 text-center rounded-full bg-ink text-paper py-2.5 text-sm font-bold hover:bg-signal transition"
+                    >
+                      Buy Now
+                    </Link>
+                    <Link
+                      to="/product/$slug"
+                      params={{ slug: p.slug }}
+                      aria-label={`View ${p.title} details`}
                       className="grid h-11 w-11 place-items-center rounded-full border-2 border-ink hover:bg-neon transition"
                     >
                       <Plus className="h-4 w-4" />
                     </Link>
-                  </div>
-                  <div className="mt-3 flex justify-center">
-                    <RazorpayButton />
                   </div>
                 </div>
               </article>
