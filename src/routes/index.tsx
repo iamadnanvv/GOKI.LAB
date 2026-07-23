@@ -185,6 +185,47 @@ function Index() {
         </div>
       </section>
 
+      {/* CJP Support / Movement */}
+      <section id="movement" className="border-y-2 border-ink bg-neon">
+        <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:px-10">
+          <div className="grid gap-10 lg:grid-cols-12 items-start">
+            <div className="lg:col-span-5">
+              <p className="font-mono text-xs uppercase tracking-widest text-ink">In Solidarity</p>
+              <h2 className="mt-3 font-display text-4xl sm:text-6xl uppercase leading-[0.92]">
+                We Stand With The <span className="underline decoration-signal decoration-[6px] underline-offset-4">Cockroach</span> Janta Party.
+              </h2>
+              <p className="mt-5 text-ink/80 text-lg max-w-lg">
+                We're a Gen-Z-led, non-profit-focused collective supporting the CJP protest — a movement that turned an insult into an anthem. Our stickers exist so protest can be affordable, visible, and everywhere.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-2">
+                {["Non-profit focused", "Community-first", "Affordable by design", "Gen-Z led"].map((t) => (
+                  <span key={t} className="rounded-full bg-ink text-neon px-3 py-1.5 text-xs font-mono uppercase tracking-widest">{t}</span>
+                ))}
+              </div>
+            </div>
+
+            <div className="lg:col-span-7 grid gap-4 sm:grid-cols-2">
+              {[
+                { n: "01", t: "Reclaimed a slur", d: "Turned 'cockroach' from an insult into a symbol of a generation that refuses to be crushed." },
+                { n: "02", t: "Made dissent visible", d: "Every laptop, bottle and helmet becomes a tiny placard for peaceful public expression." },
+                { n: "03", t: "Kept it accessible", d: "Priced for students and protestors — because civic voice shouldn't need a budget." },
+                { n: "04", t: "Fuelled the streets", d: "Surplus goes back into more stickers, community drops, and supporting the movement." },
+              ].map((i) => (
+                <div key={i.n} className="rounded-3xl border-2 border-ink bg-paper p-6">
+                  <p className="font-mono text-xs uppercase tracking-widest text-signal">{i.n}</p>
+                  <h3 className="mt-2 font-display uppercase text-2xl leading-tight">{i.t}</h3>
+                  <p className="mt-2 text-sm text-ink/70">{i.d}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-10 rounded-2xl border-2 border-dashed border-ink/40 bg-paper/60 p-5 text-xs sm:text-sm font-mono text-ink/75 leading-relaxed">
+            <span className="text-signal font-bold">NOTE —</span> We are an independent artist collective in solidarity with the CJP protest. We are not an official party, campaign, or organization, and we do not represent one. All artwork is satirical and made for civic expression.
+          </div>
+        </div>
+      </section>
+
       {/* Shop grid */}
       <section id="shop" className="bg-ink text-paper grain">
         <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:px-10">
