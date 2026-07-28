@@ -29,8 +29,12 @@ export const Route = createFileRoute("/product/$slug")({
   },
   head: ({ loaderData }) => {
     const p = loaderData?.product;
-    const title = p ? `${p.title} — Main Bhi Cockroach Art` : "Sticker — Main Bhi Cockroach Art";
-    const description = p?.desc ?? "Premium independent satirical vinyl sticker.";
+    const title = p
+      ? `${p.title} — Cockroach Janta Party (CJP) Official Merch`
+      : "Sticker — Cockroach Janta Party (CJP) Official Merch";
+    const description = p
+      ? `${p.desc} Official CJP satirical vinyl sticker — premium, protest-ready, independently designed.`
+      : "Official Cockroach Janta Party (CJP) satirical vinyl sticker — premium, protest-ready.";
     return {
       meta: [
         { title },
@@ -49,7 +53,7 @@ export const Route = createFileRoute("/product/$slug")({
                 "@type": "Product",
                 name: p.title,
                 description: p.story,
-                brand: { "@type": "Brand", name: "Main Bhi Cockroach Art" },
+                brand: { "@type": "Brand", name: "Cockroach Janta Party (CJP)" },
                 offers: {
                   "@type": "Offer",
                   price: p.price,
