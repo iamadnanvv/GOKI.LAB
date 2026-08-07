@@ -1,237 +1,174 @@
-import roach from "@/assets/sticker-roach.png";
-import textSticker from "@/assets/sticker-text.png";
-import ballot from "@/assets/sticker-ballot.png";
-import fist from "@/assets/sticker-fist.png";
-import speech from "@/assets/sticker-speech.png";
-import crown from "@/assets/sticker-crown.png";
-import jobs from "@/assets/sticker-jobs.png";
-import dinosaurs from "@/assets/sticker-dinosaurs.png";
-import squash from "@/assets/sticker-squash.png";
-import caution from "@/assets/sticker-caution.png";
-import member from "@/assets/sticker-member.png";
-import future from "@/assets/sticker-future.png";
-import youth from "@/assets/sticker-youth.png";
-import proud from "@/assets/sticker-proud.png";
-import lazy from "@/assets/sticker-lazy.png";
-import bilingual from "@/assets/sticker-bilingual.png";
+import mecha from "@/assets/goki-mecha.png";
+import controller from "@/assets/goki-controller.png";
+import magical from "@/assets/goki-magical.png";
+import pixel from "@/assets/goki-pixel.png";
+import kaiju from "@/assets/goki-kaiju.png";
+import ninja from "@/assets/goki-ninja.png";
+import deskmat from "@/assets/goki-deskmat.jpg";
+import collectibles from "@/assets/goki-collectibles.jpg";
+
+export type Kind = "sticker" | "deskmat" | "collectible";
 
 export type Product = {
   id: number;
   slug: string;
+  kind: Kind;
   img: string;
   gallery: string[];
   title: string;
+  jp: string;
   desc: string;
   story: string;
   price: number;
+  mrp: number;
   tag: string;
   accent: string;
   category: string;
+  drop: string;
+  edition: number;
+  remaining: number;
 };
 
-const IMG_POOL = [
-  roach, textSticker, ballot, fist, speech, crown,
-  jobs, dinosaurs, squash, caution, member, future,
-  youth, proud, lazy, bilingual,
-];
-
-const ACCENTS = ["bg-neon", "bg-signal", "bg-volt"];
-const TAGS = ["Bestseller", "Limited", "New", "Fresh", "Popular", "Drop 01", "CJP Pick", "Fan Fav", "Rare"];
-const PRICES = [99, 119, 129, 149, 159, 169, 179, 199, 219, 229];
+const ACCENTS = ["bg-plasma text-paper", "bg-cyber text-void", "bg-magenta text-void"];
 
 type Seed = {
   slug: string;
   title: string;
+  jp: string;
   desc: string;
   story: string;
   category: string;
+  kind: Kind;
+  img: string;
 };
 
+const STICKER_IMGS = [mecha, controller, magical, pixel, kaiju, ninja];
+
 const seeds: Seed[] = [
-  // Original core 6
-  { slug: "shady-roach", title: "Shady Roach", desc: "For laptops that survive anything.", story: "The one who scurries through blackouts, budget cuts and broken promises. Wears shades because the future's bright — apparently.", category: "Die-cut Mascot" },
-  { slug: "main-bhi-cockroach", title: "Main Bhi Cockroach", desc: "The one that started the whole mess.", story: "Bold type, bolder claim. The original statement piece for anyone tired of pretending everything's fine.", category: "Slogan" },
-  { slug: "ballot-bug", title: "Ballot Bug", desc: "Democracy has small feet.", story: "A gentle reminder that every vote counts — even the ones cast by six-legged citizens with strong opinions.", category: "Democracy" },
-  { slug: "paint-the-town", title: "Paint The Town", desc: "For quiet rebels with loud brushes.", story: "A fist gripping a paintbrush. Because the loudest protest is often the one you make in colour.", category: "Free Speech" },
-  { slug: "opinions-included", title: "Opinions Included", desc: "A speech bubble for your water bottle.", story: "A wearable disclaimer for the loud, the opinionated, and the mildly annoyed. Batteries not required.", category: "Free Speech" },
-  { slug: "king-kachra", title: "King Kachra", desc: "Every empire has its bugs.", story: "A crowned cockroach ruling over a landfill of empty promises. Long may he reign, briefly.", category: "Satire" },
+  // ---------- ANIME ----------
+  { slug: "roach-7-mecha-pilot", title: "Roach-7 Mecha Pilot", jp: "ロー7", desc: "Chibi pilot. Full holo finish.", story: "Unit ROACH-7 launched from a Neo-Tokyo hangar with two antennae, zero fear and a cockpit that smells faintly of instant noodles. Holographic laminate shifts indigo to cyan as you tilt it.", category: "Anime", kind: "sticker", img: mecha },
+  { slug: "magical-goki-chan", title: "Magical Goki-chan", jp: "まほうゴキちゃん", desc: "Shoujo sparkle, pest-core heart.", story: "Transformation sequence: 14 seconds, four costume changes, one very confused exterminator. Soft pastel holo with glitter flake laminate.", category: "Anime", kind: "sticker", img: magical },
+  { slug: "shinobi-goki", title: "Shinobi Goki", jp: "忍ゴキ", desc: "Katana out. Shadow clone optional.", story: "Trained in the dark under the fridge for a thousand nights. Gold metallic outline, shonen speed lines, one very serious headband.", category: "Anime", kind: "sticker", img: ninja },
+  { slug: "kaiju-tokyo-kaimetsu", title: "Kaiju: Tokyo Kaimetsu", jp: "東京壊滅", desc: "Skyscraper-scale. Sticker-sized.", story: "The city built the lights. The kaiju just walked through them. Full-bleed neon poster art with deep magenta bloom, printed on 5-year vinyl.", category: "Anime", kind: "sticker", img: kaiju },
+  { slug: "senpai-noticed-me", title: "Senpai Noticed Me", jp: "先輩", desc: "Blush lines included.", story: "The single most devastating four-word arc in fiction, rendered as a chibi roach vibrating with emotional damage.", category: "Anime", kind: "sticker", img: magical },
+  { slug: "isekai-truck-kun", title: "Isekai'd By Truck-kun", jp: "異世界", desc: "New world. Same six legs.", story: "Reincarnated as the strongest pest in another world. Stat sheet included, charisma dumped, survivability maxed.", category: "Anime", kind: "sticker", img: mecha },
+  { slug: "final-form-unlocked", title: "Final Form Unlocked", jp: "最終形態", desc: "Power-up aura die-cut.", story: "Three episodes of screaming, one transformation, infinite screen shake. Chrome-edge laminate that catches every light in the room.", category: "Anime", kind: "sticker", img: kaiju },
+  { slug: "goki-cafe-maid", title: "Goki Café Maid", jp: "メイド喫茶", desc: "Omurice, but make it feral.", story: "Welcome home, master. Your table is under the sink. Pastel indigo palette with foil heart accents.", category: "Anime", kind: "sticker", img: magical },
+  { slug: "cyber-antennae", title: "Cyber Antennae", jp: "サイバー", desc: "Wired for the night city.", story: "Two antennae, forty-eight ports, one very bad idea. Chrome-and-cyan cyberpunk portrait with circuit etching.", category: "Anime", kind: "sticker", img: mecha },
+  { slug: "sakura-scurry", title: "Sakura Scurry", jp: "桜", desc: "Petals falling. Legs moving.", story: "Spring arc. Soft focus. A single roach sprinting through pink petals toward a confession that will never happen.", category: "Anime", kind: "sticker", img: magical },
 
-  // New CJP core slogans
-  { slug: "still-standing-since-the-dinosaurs", title: "Still Standing Since The Dinosaurs", desc: "Older than your excuses.", story: "Circular campaign badge. Vintage propaganda seal. A quiet flex from a species that has outlasted meteors, empires and manifestos.", category: "Campaign Badge" },
-  { slug: "you-cannot-squash-a-movement", title: "You Cannot Squash A Movement", desc: "A boot. A bug. A message.", story: "A cartoon boot descending on a cockroach that is very much still flexing. Retro Soviet-meme energy for anyone who has been underestimated.", category: "Propaganda Poster" },
-  { slug: "proud-cockroach", title: "Proud Cockroach", desc: "Wear the insult. Own the anthem.", story: "Circular red seal, saluting mascot. For everyone who was called a pest and decided to make it a personality trait.", category: "Campaign Badge" },
-  { slug: "voice-of-the-lazy-and-unemployed", title: "Voice Of The Lazy & Unemployed", desc: "For beanbag revolutionaries.", story: "A cockroach on a beanbag with chai and a placard. A love letter to everyone whose most productive act today was thinking clearly.", category: "Satire" },
-  { slug: "official-cockroach-member", title: "Official Cockroach Member", desc: "Membership: zero rupees. Forever.", story: "A vintage members-only card sticker. No fees, no forms, no photo ID — you were born into this.", category: "Campaign Badge" },
-  { slug: "where-are-the-jobs", title: "Where Are The Jobs?", desc: "Asking for a generation.", story: "A helmeted cockroach holding a placard. A question that keeps getting louder because the answer keeps getting quieter.", category: "Unemployment" },
-  { slug: "listen-to-indias-youth", title: "Listen To India's Youth", desc: "Megaphone included.", story: "A cockroach and an oversized vintage microphone. Because 'we'll consider it' is not a response.", category: "Free Speech" },
-  { slug: "our-future-is-not-for-sale", title: "Our Future Is Not For Sale", desc: "Not now, not next quarter.", story: "A torch-bearing mascot in a circular seal. A refusal wrapped in a badge.", category: "Democracy" },
-  { slug: "resign-education-minister", title: "Resign Education Minister", desc: "A satirical suggestion.", story: "Warning-label satire aimed at the office, not the person. Because syllabi shouldn't feel like optional reading.", category: "Education" },
-  { slug: "opinions-ahead-caution", title: "Caution: Opinions Ahead", desc: "Yellow means loud.", story: "Hazard triangle, megaphone-wielding roach. A polite warning before you tag along.", category: "Warning Label" },
-  { slug: "main-bhi-cockroach-devanagari", title: "मैं भी कॉकरोच", desc: "Bilingual. Bold. Yours.", story: "Devanagari and Latin type collide on a defiant mascot. For anyone whose protest is fluent in more than one language.", category: "Slogan" },
+  // ---------- GAMING ----------
+  { slug: "one-up-goki", title: "1UP Goki", jp: "1UP", desc: "8-bit sprite. Full health bar.", story: "Respawns faster than your patience. True pixel-grid art printed sharp enough to count the pixels.", category: "Gaming", kind: "sticker", img: pixel },
+  { slug: "game-over-never", title: "Game Over? Never.", jp: "ゲームオーバー", desc: "CRT glow arcade badge.", story: "The screen said GAME OVER. The roach inserted another coin. Circular arcade badge with scanline print texture.", category: "Gaming", kind: "sticker", img: controller },
+  { slug: "controller-goblin", title: "Controller Goblin", jp: "コントローラー", desc: "For the 3am ranked grind.", story: "Six legs means six buttons at once. Nobody has beaten this thing in a fighting game since 2019.", category: "Gaming", kind: "sticker", img: controller },
+  { slug: "respawn-badge", title: "Respawn Badge", jp: "リスポーン", desc: "Circular esports patch style.", story: "Death is a suggestion. A crest-style badge for anyone whose K/D is bad but whose spirit is unbreakable.", category: "Gaming", kind: "sticker", img: pixel },
+  { slug: "boss-fight-imminent", title: "Boss Fight Imminent", jp: "ボス戦", desc: "Warning label, gamer edition.", story: "Hazard-yellow bar, health gauge filling, one absolutely enormous insect. Stick it on the door of anyone who owns a mechanical keyboard.", category: "Gaming", kind: "sticker", img: kaiju },
+  { slug: "afk-forever", title: "AFK Forever", jp: "離席中", desc: "Status: permanently away.", story: "Away from keyboard, present in spirit, feeding on crumbs. A quiet flex for the chronically logged-off.", category: "Gaming", kind: "sticker", img: controller },
+  { slug: "lag-is-not-my-fault", title: "Lag Is Not My Fault", jp: "ラグ", desc: "Glitch-print die-cut.", story: "Ping 340. Excuses infinite. Printed with a deliberate RGB-split glitch offset that looks like your worst match.", category: "Gaming", kind: "sticker", img: pixel },
+  { slug: "loot-goblin-drop", title: "Loot Goblin Drop", jp: "レアドロップ", desc: "Legendary rarity foil.", story: "0.4% drop rate, 100% attitude. Gold-foil rarity border on holographic stock.", category: "Gaming", kind: "sticker", img: ninja },
+  { slug: "speedrun-any-percent", title: "Speedrun Any%", jp: "スピードラン", desc: "World record holder, allegedly.", story: "Clipped through three walls and the kitchen counter. Timer graphic prints with a genuine split table.", category: "Gaming", kind: "sticker", img: pixel },
+  { slug: "no-scope-antenna", title: "No-Scope Antenna", jp: "ノースコープ", desc: "Crosshair die-cut.", story: "One antenna up, one eye closed, zero regrets. Neon crosshair on matte black stock.", category: "Gaming", kind: "sticker", img: ninja },
+  { slug: "gg-ez", title: "GG EZ", jp: "GG", desc: "Two letters. Endless consequences.", story: "Chunky arcade type with a smug little mascot. Ships with no apology.", category: "Gaming", kind: "sticker", img: controller },
+  { slug: "one-more-run", title: "One More Run", jp: "もう一回", desc: "The most expensive lie in gaming.", story: "It is 4:12am. This is run seventeen. The mascot on this sticker believes in you anyway.", category: "Gaming", kind: "sticker", img: pixel },
+
+  // ---------- DESK MATS ----------
+  { slug: "deskmat-neo-goki-city", title: "Neo Goki City XL Desk Mat", jp: "ネオゴキ", desc: "900×400mm neon cityscape.", story: "A full-bleed rain-slick Neo-Tokyo skyline with a chrome roach walking through the reflections. Stitched edges, 4mm non-slip rubber base, micro-woven cloth top tuned for low-friction glides.", category: "Desk Mats", kind: "deskmat", img: deskmat },
+  { slug: "deskmat-mecha-hangar", title: "Mecha Hangar XL Desk Mat", jp: "格納庫", desc: "Blueprint indigo, ROACH-7 schematics.", story: "Technical schematics of Unit ROACH-7 in glowing indigo linework across a deep navy field. Reads like a hangar wall, plays like a control surface.", category: "Desk Mats", kind: "deskmat", img: deskmat },
+  { slug: "deskmat-arcade-scanline", title: "Arcade Scanline Desk Mat", jp: "アーケード", desc: "CRT gradient, pixel border.", story: "A hard scanline gradient bleeding cyan into magenta with a pixel-sprite border march along the bottom edge. Feels like the cabinet you grew up on.", category: "Desk Mats", kind: "deskmat", img: deskmat },
+  { slug: "deskmat-sakura-void", title: "Sakura Void Desk Mat", jp: "桜の虚無", desc: "Petals over deep navy.", story: "Quiet one. Pink petals drifting across a near-black indigo void with a single silhouette in the corner. For desks that need less noise.", category: "Desk Mats", kind: "deskmat", img: deskmat },
+  { slug: "deskmat-kaiju-skyline", title: "Kaiju Skyline Desk Mat", jp: "怪獣", desc: "Panoramic monster panorama.", story: "The full kaiju poster stretched across 900mm of desk. Everyone on your call will ask about it.", category: "Desk Mats", kind: "deskmat", img: deskmat },
+  { slug: "deskmat-compact-goki", title: "Goki Compact Desk Mat", jp: "コンパクト", desc: "600×300mm for small setups.", story: "Same stitched build, tuned for 60% boards and tight desks. Mascot centred, minimal type, maximum grip.", category: "Desk Mats", kind: "deskmat", img: deskmat },
+
+  // ---------- COLLECTIBLES ----------
+  { slug: "roachy-hard-enamel-pin", title: "Roachy Hard Enamel Pin", jp: "ピンバッジ", desc: "Gold plated. Numbered card.", story: "38mm hard enamel, polished gold plating, double rubber clutch, mounted on a numbered limited-edition backing card. Cute. Chaotic. Unstoppable.", category: "Collectibles", kind: "collectible", img: collectibles },
+  { slug: "goki-acrylic-keychain", title: "Goki Acrylic Keychain", jp: "アクリルキーホルダー", desc: "Double-sided, star clasp.", story: "3mm clear acrylic, printed both sides, epoxy-coated edges, gold star charm. Survives keys, bags and being sat on.", category: "Collectibles", kind: "collectible", img: collectibles },
+  { slug: "mecha-pilot-standee", title: "Mecha Pilot Acrylic Standee", jp: "アクリルスタンド", desc: "140mm shelf presence.", story: "ROACH-7 on a weighted acrylic base with a printed hangar-floor plate. Built to loom politely next to your monitor.", category: "Collectibles", kind: "collectible", img: collectibles },
+  { slug: "holo-art-card-set", title: "Holo Art Card Set (5)", jp: "ホロカード", desc: "Five refractor cards, sleeved.", story: "Five 63×88mm rainbow-refractor cards featuring the full mascot roster, sleeved and boxed. Numbered on the reverse.", category: "Collectibles", kind: "collectible", img: collectibles },
+  { slug: "blind-box-pin-mystery", title: "Blind Box Mystery Pin", jp: "ブラインドボックス", desc: "1 of 8. One is a chase.", story: "Eight designs sealed in identical foil. One of them is a glow-in-the-dark chase pin limited to 40 units across the whole run. Good luck.", category: "Collectibles", kind: "collectible", img: collectibles },
+  { slug: "kaiju-vinyl-figure", title: "Kaiju Goki Vinyl Figure", jp: "ソフビ", desc: "110mm sofubi-style figure.", story: "Soft vinyl, hand-sprayed indigo-to-magenta fade, articulated head. Comes in a window box with the original kaiju poster art.", category: "Collectibles", kind: "collectible", img: collectibles },
+  { slug: "shinobi-keycap", title: "Shinobi Artisan Keycap", jp: "キーキャップ", desc: "Resin. Cherry MX stem.", story: "Hand-cast resin escape key with a suspended shinobi silhouette and gold leaf. Every one is slightly different. That is the point.", category: "Collectibles", kind: "collectible", img: collectibles },
+  { slug: "goki-sticker-vault", title: "Goki Sticker Vault (25)", jp: "ステッカーセット", desc: "25 randomized die-cuts.", story: "A sealed pouch of twenty-five randomized stickers from every drop, including at least two retired designs. Best value in the shop.", category: "Collectibles", kind: "collectible", img: collectibles },
 ];
 
-// Additional 100+ slogans and concepts
-const extraSeeds: [string, string, string, string, string][] = [
-  // slug, title, desc, story, category
-  ["squash-me-i-multiply", "Squash Me, I Multiply", "Bad math for bullies.", "A defiant roach with tiny clones splitting off. The more you push, the more of us show up.", "Resilience"],
-  ["survivor-since-forever", "Survivor Since Forever", "Evolution's stubborn favourite.", "A geological timeline sticker with a roach at every era. Comes with quiet bragging rights.", "Resilience"],
-  ["pests-with-principles", "Pests With Principles", "Ethics, but make it insect.", "A neat manifesto scroll clutched by six little legs. Read carefully — the fine print bites.", "Satire"],
-  ["fear-us-we-vote", "Fear Us, We Vote", "Small feet, loud ballots.", "A marching column of roaches with tiny ballot papers. Turnout is a threat when you're this many.", "Democracy"],
-  ["born-to-scurry", "Born To Scurry", "Legwork is a lifestyle.", "A speed-blur mascot with sneakers. For people who show up before the tear gas.", "Resilience"],
-  ["price-of-onions", "Price Of Onions: A Tragedy", "Rupee-shaped grief.", "A weeping roach next to an onion priced like a luxury import. Kitchen politics is politics.", "Inflation"],
-  ["thali-tax", "Thali Tax", "Everything on the plate, taxed.", "A cockroach with a fork and a shrinking thali. A little dinner, a lot of levy.", "Inflation"],
-  ["degree-received-please-wait", "Degree Received. Please Wait.", "For the class of every year.", "A graduation cap on a cockroach clutching a resume that has developed sentience.", "Unemployment"],
-  ["hire-us-cowards", "Hire Us, Cowards", "A polite little ultimatum.", "A mascot in a smart shirt, angry eyebrows. Applications sent: 400. Interviews: 2.", "Unemployment"],
-  ["intern-forever", "Intern Forever", "Certificates, not salaries.", "A tired roach in a lanyard holding a stack of certificates and no bank alerts.", "Unemployment"],
-  ["paper-leak-champions", "Paper Leak Champions", "A national sport.", "A trophy-holding roach with 'CONGRATS' confetti made of exam sheets. Bitter satire, no notes.", "Education"],
-  ["syllabus-was-fiction", "The Syllabus Was Fiction", "Plot twists in every subject.", "A roach holding a textbook with pages flying off. Somewhere, a curriculum wept.", "Education"],
-  ["fee-hike-fatigue", "Fee Hike Fatigue", "Tuition, but make it trauma.", "A cockroach in a graduation gown collapsing under a stack of invoices.", "Education"],
-  ["scholar-and-a-scoundrel", "Scholar & A Scoundrel", "Merit, briefly.", "A cockroach in glasses holding a book and a molotov of ink. Learning is a threat again.", "Education"],
-  ["read-a-book-cowards", "Read A Book, Cowards", "Preferably one you didn't ban.", "A stack of banned books with a roach reading gleefully on top.", "Free Speech"],
-  ["banned-and-buzzing", "Banned & Buzzing", "The censor's greatest hits.", "A censored bar over a roach's mouth, still very obviously talking. Streisand approved.", "Free Speech"],
-  ["free-the-feed", "Free The Feed", "For platforms that pretend.", "A phone with a roach breaking out of a suppressed post. Algorithms fear organized bugs.", "Free Speech"],
-  ["quiet-quitting-loudly", "Quiet Quitting, Loudly", "Contradiction is the point.", "A roach holding a two-week notice like a placard. HR is confused; we are not.", "Satire"],
-  ["chai-and-chaos", "Chai & Chaos", "Two national beverages.", "A steaming glass of cutting chai next to a roach with a matchstick. Iconic pair.", "Youth"],
-  ["metro-manifesto", "Metro Manifesto", "Written between stations.", "A commuter roach with earbuds and a rolled-up placard. Rush hour radicals.", "Youth"],
-  ["auto-rickshaw-anarchist", "Auto Rickshaw Anarchist", "Meter down, mood up.", "A roach hanging off an auto with hair flying. The city belongs to us if we tip well.", "Youth"],
-  ["hostel-room-hero", "Hostel Room Hero", "Founding member since Sem 1.", "A dorm-room cockroach holding a chai mug like a scepter. The original activist.", "Youth"],
-  ["cough-syrup-democracy", "Cough Syrup Democracy", "Two spoons of dissent.", "A satirical medicine bottle labeled 'For Chronic Silence'. Consult a citizen.", "Satire"],
-  ["disclaimer-included", "Disclaimer Included", "Satire not sold separately.", "A tiny 'terms & conditions' scroll being read by a courtroom cockroach.", "Satire"],
-  ["footnote-of-history", "Footnote Of History", "Where the truth actually lives.", "A cockroach highlighting a footnote in a giant history book. Details matter.", "Democracy"],
-  ["press-not-pressed", "Press, Not Pressed", "Notebook out, hands up.", "A cockroach reporter with a mic. The story is still the story.", "Free Speech"],
-  ["ban-lists-not-bugs", "Ban Lists, Not Bugs", "Lists get long. So do we.", "A roach crossing out a very long censorship list. Ink is cheap.", "Free Speech"],
-  ["archive-everything", "Archive Everything", "Screenshots are civic duty.", "A cockroach with a giant filing cabinet labeled 'RECEIPTS'. Save. Save again.", "Democracy"],
-  ["placard-in-my-tote", "Placard In My Tote", "Always ready.", "A cotton tote with a rolled placard poking out and a cockroach mascot patch.", "Youth"],
-  ["mic-check-mic-check", "Mic Check, Mic Check", "Testing, testing.", "Two roaches on either side of a giant amp. Rehearsal for the town square.", "Free Speech"],
-  ["assembly-required", "Assembly Required", "Some assembly. Lots of us.", "Flat-pack assembly diagram of a protest, IKEA-style. Tools: presence.", "Resilience"],
-  ["small-legs-long-march", "Small Legs, Long March", "Distance is a mindset.", "A tiny cockroach army walking across a map. Kilometers are cheap.", "Resilience"],
-  ["outlast-the-outrage", "Outlast The Outrage", "Cycles end. We don't.", "A calendar with all news cycles struck out and a smug roach in the corner.", "Resilience"],
-  ["hope-is-a-tactic", "Hope Is A Tactic", "Also a strategy.", "A cockroach lighting a small paper lantern. Small light, long night.", "Resilience"],
-  ["youth-is-not-a-phase", "Youth Is Not A Phase", "It's a demographic.", "A generational chart with a defiant roach at the top of the curve.", "Youth"],
-  ["ok-boomer-with-love", "OK Boomer, With Love", "Softly, softly.", "A polite cockroach handing over a tiny bouquet and a resume.", "Youth"],
-  ["main-character-energy", "Main Character Energy", "Show, don't scroll.", "A roach lit dramatically like a Bollywood poster. Cue the item number.", "Youth"],
-  ["scroll-then-show-up", "Scroll, Then Show Up", "Feed to feet.", "A phone with legs and a cockroach jumping off it into the street.", "Youth"],
-  ["not-a-vote-bank", "Not A Vote Bank", "A whole electorate.", "A giant piggy bank labeled 'YOUTH' being politely refused by a cockroach.", "Democracy"],
-  ["press-esc-on-fear", "Press ESC On Fear", "A keyboard rebellion.", "A giant ESC key being pressed by a determined cockroach.", "Resilience"],
-  ["ctrl-alt-defy", "Ctrl + Alt + Defy", "Three-finger salute.", "Three cockroach legs each on a key. Reboot in progress.", "Satire"],
-  ["low-batt-still-loud", "Low Battery, Still Loud", "5% and shouting.", "A dying phone icon with a cockroach yelling out of the screen.", "Free Speech"],
-  ["captcha-i-am-not-quiet", "Captcha: I Am Not Quiet", "Prove you are human.", "A captcha grid full of tiny cockroach silhouettes. Please select all.", "Satire"],
-  ["algo-cannot-hold-us", "The Algorithm Cannot Hold Us", "Reach denied. Streets accepted.", "A cockroach breaking out of a graph line. Chart goes down; crowd goes up.", "Free Speech"],
-  ["shadow-banned-street-approved", "Shadow-banned, Street-approved", "Offline is undefeated.", "A blurred profile pic with a mascot marching under it in bright colour.", "Free Speech"],
-  ["press-freedom-please", "Press Freedom, Please", "It's not a favour.", "A vintage newspaper stand run by cockroaches. All headlines legible.", "Free Speech"],
-  ["accountability-in-aisle-3", "Accountability, Aisle 3", "Between denial and delay.", "A grocery aisle sign with a very small stock label. Cockroach shopper skeptical.", "Democracy"],
-  ["manifesto-not-menu", "Manifesto, Not Menu", "No à la carte democracy.", "A roach chef presenting a scroll on a silver platter.", "Democracy"],
-  ["term-limits-please", "Term Limits, Please", "For everything.", "A giant hourglass with a tiny cockroach tapping the glass.", "Democracy"],
-  ["taxation-with-frustration", "Taxation With Frustration", "A modern classic.", "A roach filing a tax return the size of a bedsheet.", "Inflation"],
-  ["gst-on-my-grief", "GST On My Grief", "Also on my chai.", "A price tag stuck to a single tear rolling down a mascot's cheek.", "Inflation"],
-  ["petrol-price-poetry", "Petrol Price Poetry", "A haiku in three digits.", "A pump nozzle spraying tiny sonnets over a horrified scooter-riding roach.", "Inflation"],
-  ["load-shedding-loud-shouting", "Load-shedding, Loud-shouting", "Lights out. Voices up.", "A candle-lit rally by cockroaches. Power to the people; also just power.", "Resilience"],
-  ["farmer-first-obviously", "Farmer First, Obviously", "The kitchen speaks.", "A tiny mascot bowing to a huge wheat stalk. Respect is not a slogan.", "Democracy"],
-  ["small-shopkeeper-strong", "Small Shopkeeper, Strong Opinions", "The kirana knows.", "A roach behind a tiny counter with a very big ledger. Prices, memory, receipts.", "Inflation"],
-  ["gig-work-glorified-hustle", "Gig Work, Glorified Hustle", "Ratings included.", "A helmet-wearing cockroach on a bike with a five-star badge and no benefits.", "Unemployment"],
-  ["overworked-underpaid-online", "Overworked, Underpaid, Online", "Log in to log off never.", "A laptop with a roach glued to it and a coffee IV drip.", "Unemployment"],
-  ["hr-said-family", "HR Said 'Family'", "The reddest flag.", "A cockroach at a family dinner with lawyers. Pass the NDA.", "Satire"],
-  ["out-of-office-forever", "Out Of Office, Forever", "Auto-reply engaged.", "A beach-chair cockroach with a laptop showing 'MEETING DECLINED'.", "Satire"],
-  ["dissent-is-devotion", "Dissent Is Devotion", "A quieter faith.", "A cockroach lighting a diya in front of a placard.", "Democracy"],
-  ["cough-once-for-democracy", "Cough Once For Democracy", "Twice for a hearing.", "A roach at a doctor's clinic with a stethoscope on a ballot box.", "Satire"],
-  ["parliament-of-pests", "A Parliament Of Pests", "In session, always.", "A grand chamber full of debating cockroaches in tiny reading glasses.", "Democracy"],
-  ["policy-in-plain-english", "Policy In Plain English", "A radical proposal.", "A translator cockroach turning legalese into a paper airplane.", "Democracy"],
-  ["ban-the-bans", "Ban The Bans", "Meta, and correct.", "A stamp saying BANNED over the word BAN. Cockroach grinning.", "Free Speech"],
-  ["comedy-is-not-a-crime", "Comedy Is Not A Crime", "Comedians disagree softly.", "A cockroach at a mic with a courtroom sketch artist scribbling furiously.", "Free Speech"],
-  ["meme-as-manifesto", "Meme As Manifesto", "Compressed politics.", "A cockroach in a museum next to a framed meme. Placard says 'Untitled, 2026'.", "Youth"],
-  ["print-more-stickers", "Print More Stickers", "Directive from HQ.", "A tiny printer spitting out mascots endlessly. Ink budget: infinite.", "Satire"],
-  ["paste-them-everywhere", "Paste Them Everywhere", "But not on cars you don't own.", "A lamp post densely layered with tiny cockroach stickers.", "Satire"],
-  ["laptop-lid-liberation", "Laptop Lid Liberation", "One surface at a time.", "A cracked-open laptop lid with mascots as constellations.", "Youth"],
-  ["water-bottle-warfare", "Water Bottle Warfare", "Hydrate, agitate.", "A dented steel bottle covered in mascots and slogans.", "Youth"],
-  ["helmet-with-a-headline", "Helmet With A Headline", "Safety first, statement second.", "A scooter helmet with a big roach decal and a small heart.", "Youth"],
-  ["notebook-of-nuisance", "Notebook Of Nuisance", "The margins are the point.", "A ruled notebook with cockroach doodles overtaking the equations.", "Education"],
-  ["assembly-elects-itself", "The Assembly Elects Itself", "Skipping a step.", "A mascot handing a ballot to a mirror. Efficient. Suspicious.", "Democracy"],
-  ["ideal-manifesto-loading", "Ideal Manifesto: Loading…", "0% forever.", "A loading bar on a scroll of promises.", "Satire"],
-  ["election-eve-anxiety", "Election Eve Anxiety", "A national mood.", "A twitchy cockroach clutching a chai at 3 AM.", "Democracy"],
-  ["exit-poll-shrug", "Exit Poll Shrug", "Nobody knows anything.", "A cockroach doing an exaggerated shrug next to a pie chart of pie.", "Democracy"],
-  ["vote-then-vent", "Vote, Then Vent", "In that order.", "A ballot box with a megaphone welded to its side.", "Democracy"],
-  ["scroll-vote-scream-repeat", "Scroll · Vote · Scream · Repeat", "A daily practice.", "A four-panel comic of a cockroach going through the cycle. Again.", "Youth"],
-  ["nation-of-notifications", "Nation Of Notifications", "Ping. Ping. Riot.", "A phone lockscreen crammed with civic alerts, held by trembling roach legs.", "Youth"],
-  ["main-character-in-a-crowd", "Main Character In A Crowd", "But so is everyone.", "A crowd of identical mascots, one with a small crown. Points made.", "Youth"],
-  ["polite-not-passive", "Polite, Not Passive", "Please. And also, no.", "A tea-serving mascot handing over a decline slip on a saucer.", "Resilience"],
-  ["cockroach-code-of-conduct", "Cockroach Code Of Conduct", "Article 1: Show Up.", "A stately scroll being read aloud by a mascot with reading glasses.", "Campaign Badge"],
-  ["dictionary-of-dissent", "Dictionary Of Dissent", "Definitions expanded.", "A giant book labelled 'DISSENT' with cockroach bookmarks.", "Free Speech"],
-  ["proof-of-presence", "Proof Of Presence", "A civic receipt.", "A tiny paper receipt printed with 'I WAS THERE' and a cockroach signature.", "Democracy"],
-  ["turnout-is-a-love-language", "Turnout Is A Love Language", "Show up for the city.", "Little cockroach hearts marching to a polling booth.", "Democracy"],
-  ["subscribe-to-your-country", "Subscribe To Your Country", "The rare good subscription.", "A cockroach handing over a form labelled 'Voter Registration'.", "Democracy"],
-  ["read-the-fine-print", "Read The Fine Print", "It's usually the plot.", "A magnifying glass over a manifesto held by a suspicious mascot.", "Democracy"],
-  ["small-town-big-mouth", "Small Town, Big Mouth", "The provinces speak.", "A cockroach on a village map with a comically large megaphone.", "Free Speech"],
-  ["city-halls-are-ours", "City Halls Are Ours", "By blueprint.", "A mascot planting a tiny flag on a municipal building blueprint.", "Democracy"],
-  ["ward-level-warriors", "Ward-Level Warriors", "The local is the point.", "A mascot pinning a ward map to a wall with actual pins.", "Democracy"],
-  ["youth-council-forever", "Youth Council Forever", "Self-appointed. Self-respecting.", "A folding chair, a mascot, a hand-lettered sign. That's a council.", "Youth"],
-  ["rti-rti-rti", "RTI · RTI · RTI", "A three-letter prayer.", "A trio of cockroaches filing identical requests at three different windows.", "Democracy"],
-  ["citizen-first-consumer-later", "Citizen First, Consumer Later", "In that exact order.", "A shopping cart holding a ballot box, pushed by a mascot.", "Democracy"],
-  ["fund-the-schools", "Fund The Schools", "Not the slogans.", "A tiny classroom on a scale outweighing a giant billboard.", "Education"],
-  ["libraries-are-radical", "Libraries Are Radical", "Silence is not compliance.", "A cockroach reading contentedly under a 'QUIET PLEASE' sign.", "Education"],
-  ["hospital-is-not-a-hobby", "A Hospital Is Not A Hobby", "Fund it like it matters.", "A stethoscope wrapped around a cockroach reading a spreadsheet.", "Democracy"],
-  ["potholes-are-personal", "Potholes Are Personal", "Municipal romance.", "A pothole large enough to host a mascot's picnic.", "Satire"],
-  ["traffic-is-a-policy-choice", "Traffic Is A Policy Choice", "So is fixing it.", "A signal light with a cockroach directing chaos with a flag.", "Democracy"],
-  ["air-quality-anxiety", "Air Quality Anxiety Club", "Founding member.", "A mascot in a mask and a T-shirt that says 'PM 2.5? No thanks.'", "Democracy"],
-  ["plant-a-tree-vote-too", "Plant A Tree, Vote Too", "Both count.", "A mascot with a sapling in one hand and a ballot in the other.", "Democracy"],
-  ["small-acts-loud-echo", "Small Acts, Loud Echo", "You are the amplifier.", "One mascot shouting into a canyon full of returning mascot shadows.", "Resilience"],
-  ["boring-is-a-victory", "Boring Is A Victory", "Working systems are quiet.", "A mascot at a desk stamping 'APPROVED' on a stack of ordinary requests.", "Democracy"],
-  ["dont-scroll-away-democracy", "Don't Scroll Away Democracy", "Put the phone down. Sometimes.", "A giant hand about to swipe, blocked by a tiny mascot with a stop sign.", "Youth"],
-  ["headlines-not-hexes", "Headlines, Not Hexes", "Facts over vibes.", "A newspaper being read by a mascot who is refusing a crystal ball.", "Free Speech"],
-  ["independent-and-loud", "Independent & Loud", "The two settings.", "A mascot with a boombox on one shoulder and a scroll in the other hand.", "Free Speech"],
-  ["fine-i-will-organize", "Fine, I Will Organize", "A reluctant hero arc.", "A tired mascot rolling up sleeves in front of a whiteboard.", "Resilience"],
-  ["sticker-as-a-siren", "Sticker As A Siren", "Small. Persistent. Loud.", "A tiny cockroach sticker glowing on a lamp post at night.", "Satire"],
+const priceFor = (kind: Kind, i: number) => {
+  if (kind === "deskmat") return [1699, 1899, 1999, 2199, 2299, 1499][i % 6];
+  if (kind === "collectible") return [599, 399, 749, 649, 449, 1299, 899, 999][i % 8];
+  return [149, 179, 199, 219, 249, 169][i % 6];
+};
+
+const DROPS = ["Drop 01 · Neo-Tokyo", "Drop 02 · Continue?", "Drop 03 · Final Form"];
+
+export const products: Product[] = seeds.map((s, i) => {
+  const price = priceFor(s.kind, i);
+  const edition = s.kind === "collectible" ? 200 : s.kind === "deskmat" ? 150 : 500;
+  const remaining = Math.max(6, Math.round(edition * (0.12 + ((i * 37) % 61) / 100)));
+  const tags = ["Limited", "New Drop", "Holo", "Restocked", "Chase", "Fan Fav", "Last Units"];
+  return {
+    id: i + 1,
+    slug: s.slug,
+    kind: s.kind,
+    img: s.img,
+    gallery: [s.img, STICKER_IMGS[(i + 1) % STICKER_IMGS.length], STICKER_IMGS[(i + 3) % STICKER_IMGS.length]],
+    title: s.title,
+    jp: s.jp,
+    desc: s.desc,
+    story: s.story,
+    price,
+    mrp: Math.round(price * 1.35),
+    tag: remaining < 40 ? "Last Units" : tags[i % tags.length],
+    accent: ACCENTS[i % ACCENTS.length],
+    category: s.category,
+    drop: DROPS[i % DROPS.length],
+    edition,
+    remaining,
+  };
+});
+
+export const categories = ["All", "Anime", "Gaming", "Desk Mats", "Collectibles"] as const;
+
+export const stickerSizes = [
+  { label: "S", dim: '2"', priceMod: -30 },
+  { label: "M", dim: '3"', priceMod: 0 },
+  { label: "L", dim: '4"', priceMod: 40 },
+  { label: "XL", dim: '5.5"', priceMod: 90 },
 ];
 
-function build(): Product[] {
-  const combined: Seed[] = [
-    ...seeds,
-    ...extraSeeds.map(([slug, title, desc, story, category]) => ({ slug, title, desc, story, category })),
-  ];
-  return combined.map((s, i) => {
-    const img = IMG_POOL[i % IMG_POOL.length];
-    const gallery = [
-      img,
-      IMG_POOL[(i + 3) % IMG_POOL.length],
-      IMG_POOL[(i + 7) % IMG_POOL.length],
-    ];
-    return {
-      id: i + 1,
-      slug: s.slug,
-      img,
-      gallery,
-      title: s.title,
-      desc: s.desc,
-      story: s.story,
-      price: PRICES[i % PRICES.length],
-      tag: TAGS[i % TAGS.length],
-      accent: ACCENTS[i % ACCENTS.length],
-      category: s.category,
-    };
-  });
-}
-
-export const products: Product[] = build();
-
-export const categories: string[] = Array.from(new Set(products.map((p) => p.category)));
-
-export const sizes = [
-  { label: "S", dim: "3 in", priceMod: -30 },
-  { label: "M", dim: "4 in", priceMod: 0 },
-  { label: "L", dim: "6 in", priceMod: 60 },
-  { label: "XL", dim: "8 in", priceMod: 140 },
+export const deskMatSizes = [
+  { label: "M", dim: "600×300", priceMod: -300 },
+  { label: "L", dim: "800×300", priceMod: 0 },
+  { label: "XL", dim: "900×400", priceMod: 300 },
+  { label: "XXL", dim: "1200×600", priceMod: 700 },
 ];
+
+export const collectibleSizes = [
+  { label: "1×", dim: "Single", priceMod: 0 },
+  { label: "2×", dim: "Pair", priceMod: 500 },
+  { label: "3×", dim: "Trio", priceMod: 950 },
+  { label: "Set", dim: "Full run", priceMod: 1800 },
+];
+
+export const sizesFor = (kind: Kind) =>
+  kind === "deskmat" ? deskMatSizes : kind === "collectible" ? collectibleSizes : stickerSizes;
+
+export const specsFor = (kind: Kind) =>
+  kind === "deskmat"
+    ? ["Stitched edges", "4mm rubber base", "Micro-woven cloth", "Spill resistant"]
+    : kind === "collectible"
+      ? ["Numbered edition", "Gift-ready packaging", "Premium materials", "Never restocked"]
+      : ["5-year vinyl", "Waterproof", "UV resistant", "Holo laminate"];
+
+export const getProduct = (slug: string) => products.find((p) => p.slug === slug);
+
+export const relatedProducts = (slug: string) => {
+  const current = getProduct(slug);
+  return products
+    .filter((p) => p.slug !== slug && (!current || p.category === current.category))
+    .slice(0, 3);
+};
 
 export const productReviews = [
-  { name: "Ananya R.", role: "Design student, Bengaluru", stars: 5, text: "The print is unreal. Colors pop, edges are clean. My laptop finally has a personality." },
-  { name: "Kabir M.", role: "Illustrator, Mumbai", stars: 5, text: "Survived monsoon, coffee spills and airport security. These are the real MVPs." },
-  { name: "Sneha P.", role: "Grad student, Delhi", stars: 5, text: "Shipping was quick and the packaging felt like a mini art drop. Chef's kiss." },
-  { name: "Rehan K.", role: "Skater, Pune", stars: 4, text: "Stuck one on my board six months ago. Still bright, still sticking, still funny." },
+  { name: "Rhea T.", role: "Vtuber · Bengaluru", stars: 5, text: "The holo laminate on the mecha pilot is unreal on camera. Chat asked about it for twenty minutes straight." },
+  { name: "Aditya S.", role: "Ranked grinder · Pune", stars: 5, text: "Desk mat glide is smooth without being slippery. Stitching hasn't frayed after four months of abuse." },
+  { name: "Mei L.", role: "Con artist alley · Delhi", stars: 5, text: "Pulled the chase pin from the blind box on my second try. Plating is genuinely convention-grade." },
+  { name: "Karan V.", role: "Keyboard builder · Mumbai", stars: 4, text: "Artisan keycap sits perfectly on MX. Wish more colourways existed — restock the indigo one please." },
 ];
-
-export function getProduct(slug: string) {
-  return products.find((p) => p.slug === slug);
-}
-
-export function relatedProducts(slug: string, count = 3) {
-  return products.filter((p) => p.slug !== slug).slice(0, count);
-}
