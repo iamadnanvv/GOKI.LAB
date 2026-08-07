@@ -5,16 +5,18 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --font-display: "Archivo Black", "Arial Black", sans-serif;
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
-  --color-ink: #111111;
-  --color-paper: #f8f8f8;
-  --color-neon: #7cff4f;
-  --color-signal: #ff3b30;
-  --color-volt: #ffd60a;
-  --color-fog: #e8e8e8;
+  --color-void: #0a0a1a;
+  --color-abyss: #141432;
+  --color-deep: #1e1e5a;
+  --color-plasma: #4f46e5;
+  --color-cyber: #67e8f9;
+  --color-magenta: #f472b6;
+  --color-paper: #eef1ff;
+  --color-mist: #a5b0e0;
 }
 
 @utility grain {
@@ -31,7 +33,18 @@
 }
 
 @utility sticker-shadow {
-  filter: drop-shadow(0 12px 18px rgba(0,0,0,0.25)) drop-shadow(0 2px 2px rgba(0,0,0,0.15));
+  filter: drop-shadow(0 18px 28px rgba(0,0,0,0.55)) drop-shadow(0 0 22px rgba(79,70,229,0.35));
+}
+
+@utility glow-plasma {
+  box-shadow: 0 0 0 1px rgba(79,70,229,0.45), 0 18px 60px -18px rgba(79,70,229,0.65);
+}
+
+@utility grid-bg {
+  background-image:
+    linear-gradient(rgba(79,70,229,0.10) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(79,70,229,0.10) 1px, transparent 1px);
+  background-size: 48px 48px;
 }
 
 @keyframes float-a { 0%,100% { transform: translateY(0) rotate(-6deg);} 50% { transform: translateY(-14px) rotate(-4deg);} }
@@ -182,3 +195,10 @@
     color: var(--color-foreground);
   }
 }
+
+
+@keyframes scan { from { transform: translateY(-100%);} to { transform: translateY(100%);} }
+@utility anim-scan { animation: scan 6s linear infinite; }
+
+html { scroll-behavior: smooth; }
+body { background-color: var(--color-void); color: var(--color-paper); }
